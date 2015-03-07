@@ -24,12 +24,21 @@ function getReviewCount($package) {
     return $count;    
 }
 
+function save_data_point_sql($reviews, $plus) {
+    $link = mysql_connect('127.6.119.2', 'adminmW9DPtq', '42T3X5F_Zxc-');
+    mysql_select_db('underwater');
+
+    // Performing SQL query
+    $query = "INSERT INTO checkpoints (`date`, `reviews`, `checkpoints`) VALUES(NOW(), '$reviews' , '$plus')";
+    $result = mysql_query($query);
+}
+
 $package = "com.gamehivecorp.taptitans";
 
 $plus_one_count = getPlusOne($package);
 $review_count = getReviewCount($package);
 
-echo "Plus Ones: $plus_one_count \n";
-echo "Reviews: $review_count";
+save_data_point_sql($review_count, $plus_one_count);
+
 
 ?>
