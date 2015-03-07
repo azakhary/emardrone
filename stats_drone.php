@@ -39,6 +39,7 @@ function save_data_point_mongo($package, $reviews, $plus) {
 
 function read_targets() {
     $link = mysql_connect('127.6.119.2', 'adminmW9DPtq', '42T3X5F_Zxc-');
+    var_dump(mysql_error());
     mysql_select_db('underwater');
 
     $targets = array();
@@ -46,7 +47,6 @@ function read_targets() {
     // Performing SQL query
     $query = "SELECT * FROM `targets`";
     $result = mysql_query($query);
-    var_dump(mysql_error());
 
     while($row = $result->fetch_assoc()) {
         $targets[] = $row['package'];
