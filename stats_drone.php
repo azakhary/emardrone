@@ -38,13 +38,17 @@ function getDescription($package, $html) {
 }
 
 function save_data_point_mongo($package, $reviews, $plus, $description) {
+    $dt = new DateTime(date('Y-m-d H:i:s'), new DateTimeZone('UTC'));
+    $ts = $dt->getTimestamp();
+    $now = new MongoDate($ts);
+
     $host = "mongodb://admin:1ePwQJx4KNaR@127.6.119.3:27017/";
 
     $m = new MongoClient($host);
     $db = $m->underwater;
     $collection = $db->checkpoints;
 
-    $document = array( "package" => $package, "date" => date("Y-m-d H:i:s"), "reviews" => $reviews, "gplus" => $plus, "description" => $description );
+    $document = array( "package" => $package, "date" => $now, "reviews" => $reviews, "gplus" => $plus, "description" => $description );
     $collection->insert($document);
 }
 
