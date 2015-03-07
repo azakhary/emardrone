@@ -1,22 +1,16 @@
 <?php
 
-   // create curl resource 
-    $ch = curl_init(); 
+    require_ince "cUrl.php";
+
+    $curl = new cUrl();
 
     $url = "https://play.google.com/store/apps/category/GAME_ROLE_PLAYING/collection/topselling_free?hl=en";
 
     // set url 
-    curl_setopt($ch, CURLOPT_URL, $url); 
+    $content = $curl->loadUrl($url);
 
-    //return the transfer as a string 
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); 
+    $appName = $cUrl->getBetweenString($content, '<div class="cover-inner-align"> <img alt="', '"');
 
-    // $output contains the output string 
-    $output = curl_exec($ch); 
-
-    // close curl resource to free up system resources 
-    curl_close($ch);  
-
-    echo $output;    
+    var_dump($appName);  
 
 ?>
