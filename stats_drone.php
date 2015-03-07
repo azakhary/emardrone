@@ -37,6 +37,26 @@ function save_data_point_mongo($reviews, $plus) {
     $collection->insert($document);
 }
 
+function read_targets() {
+    $link = mysql_connect('127.6.119.2', 'adminmW9DPtq', '42T3X5F_Zxc-');
+    mysql_select_db('underwater');
+
+    $targets = array();
+
+    // Performing SQL query
+    $query = "SELECT `package` FROM `targets`";
+    $result = mysql_query($query);
+
+    if ($result->num_rows > 0) {
+    
+        while($row = $result->fetch_assoc()) {
+            $targets[] = $row['package'];
+        }
+    }
+
+    return $targets;
+}
+
 function save_data_point_sql($reviews, $plus) {
     $link = mysql_connect('127.6.119.2', 'adminmW9DPtq', '42T3X5F_Zxc-');
     mysql_select_db('underwater');
@@ -46,7 +66,9 @@ function save_data_point_sql($reviews, $plus) {
     $result = mysql_query($query);
 }
 
-$package = "com.gamehivecorp.taptitans";
+$targets = read_targets();
+
+$package = $targets[0];
 
 $plus_one_count = getPlusOne($package);
 $review_count = getReviewCount($package);
