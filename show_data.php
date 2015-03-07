@@ -7,7 +7,7 @@
     $db = $m->underwater;
     $collection = $db->checkpoints;
 
-    $cursor = $collection->find();
+    $cursor = $collection->find(array("data_version" => "v1"));
 
 	// iterate through the results
 	foreach ($cursor as $document) {

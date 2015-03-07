@@ -54,7 +54,7 @@ function save_data_point_mongo($package, $reviews, $plus, $description) {
     $desc_md5_curr = md5($description);
     if($desc_md5_curr == $desc_md5_last) $description = null;
 
-    $document = array( "package" => $package, "date" => $now, "reviews" => $reviews, "gplus" => $plus, "description" => $description );
+    $document = array( "data_version" => "v1", "package" => $package, "date" => $now, "reviews" => $reviews, "gplus" => $plus, "description" => $description );
     $collection->insert($document);
 }
 
