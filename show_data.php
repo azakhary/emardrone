@@ -13,7 +13,7 @@
 
 	// iterate through the results
 	foreach ($cursor as $document) {
-		$date = date('Y-m-d H:i:s', $document["date"]>sec);
+		$date = date('Y-m-d H:i:s', $document["date"]->sec);
 	    echo "Package: {$document["package"]}, Date: {$date}, Gplus: {$document["gplus"]}, Reviews: {$document["reviews"]}, D: {$document["description"]} </br>";
 	}
 
