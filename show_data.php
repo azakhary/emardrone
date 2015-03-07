@@ -1,5 +1,7 @@
 <?php
 
+	ini_set('display_errors', '1');
+
 	// show eisting collections
 	$host = "mongodb://admin:1ePwQJx4KNaR@127.6.119.3:27017/";
 
