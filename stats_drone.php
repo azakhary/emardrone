@@ -26,14 +26,14 @@ function getReviewCount($package) {
     return $count;    
 }
 
-function save_data_point_mongo($reviews, $plus) {
+function save_data_point_mongo($package, $reviews, $plus) {
     $host = "mongodb://admin:1ePwQJx4KNaR@127.6.119.3:27017/";
 
     $m = new MongoClient($host);
     $db = $m->underwater;
     $collection = $db->checkpoints;
 
-    $document = array( "date" => date("Y-m-d H:i:s"), "reviews" => $reviews, "gplus" => $plus );
+    $document = array( "package" => $package, "date" => date("Y-m-d H:i:s"), "reviews" => $reviews, "gplus" => $plus );
     $collection->insert($document);
 }
 
@@ -44,7 +44,7 @@ function read_targets() {
     $targets = array();
 
     // Performing SQL query
-    $query = "SELECT `package` FROM `targets`";
+    $query = "SELECT * FROM `targets`";
     $result = mysql_query($query);
 
     if ($result->num_rows > 0) {
@@ -53,17 +53,8 @@ function read_targets() {
             $targets[] = $row['package'];
         }
     }
-
+var_dump($targets);
     return $targets;
-}
-
-function save_data_point_sql($reviews, $plus) {
-    $link = mysql_connect('127.6.119.2', 'adminmW9DPtq', '42T3X5F_Zxc-');
-    mysql_select_db('underwater');
-
-    // Performing SQL query
-    $query = "INSERT INTO checkpoints (`date`, `reviews`, `gplus`) VALUES(NOW(), '$reviews' , '$plus')";
-    $result = mysql_query($query);
 }
 
 $targets = read_targets();
@@ -73,7 +64,7 @@ $package = $targets[0];
 $plus_one_count = getPlusOne($package);
 $review_count = getReviewCount($package);
 
-save_data_point_mongo($review_count, $plus_one_count);
+save_data_point_mongo($package, $review_count, $plus_one_count);
 
 echo "done";
 ?>
