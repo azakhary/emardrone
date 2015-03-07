@@ -26,6 +26,17 @@ function getReviewCount($package) {
     return $count;    
 }
 
+function save_data_point_mongo($reviews, $plus) {
+    $host = "mongodb://admin:1ePwQJx4KNaR@127.6.119.3:27017/";
+
+    $m = new MongoClient($host);
+    $db = $m->underwater;
+    $collection = $db->checkpoints;
+
+    $document = array( "date" => date("Y-m-d H:i:s"), "reviews" => $reviews, "gplus" => $plus );
+    $collection->insert($document);
+}
+
 function save_data_point_sql($reviews, $plus) {
     $link = mysql_connect('127.6.119.2', 'adminmW9DPtq', '42T3X5F_Zxc-');
     mysql_select_db('underwater');
@@ -40,7 +51,7 @@ $package = "com.gamehivecorp.taptitans";
 $plus_one_count = getPlusOne($package);
 $review_count = getReviewCount($package);
 
-save_data_point_sql($review_count, $plus_one_count);
+save_data_point_mongo($review_count, $plus_one_count);
 
-
+echo "done";
 ?>
