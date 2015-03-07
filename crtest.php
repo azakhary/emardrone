@@ -11,8 +11,10 @@
 
     $content = $curl->getData();
 
-    $appName = cUrl::getBetweenString($content, '<div class="cover-inner-align"> <img alt="', '"');
+    $appNames = cUrl::getBetweenString($content, '<div class="cover-inner-align"> <img alt="', '"');
 
-    var_dump($appName);  
+    foreach($appNames as $value) {
+        echo "<div>$value</div>";
+    }
 
 ?>
