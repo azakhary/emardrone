@@ -11,7 +11,7 @@
 
 	// iterate through the results
 	foreach ($cursor as $document) {
-	    echo "Package: {$document["package"]}, Date: {$document["date"]}, Gplus: {$document["gplus"]}, Reviews: {$document["reviews"]} </br>";
+	    echo "Package: {$document["package"]}, Date: {$document["date"]}, Gplus: {$document["gplus"]}, Reviews: {$document["reviews"]}, D: {$document["description"]} </br>";
 	}
 
 ?>

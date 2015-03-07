@@ -68,7 +68,7 @@ $targets = read_targets();
 
 $package = $targets[0];
 
-$html = getPlayStoreHTML($packge);
+$html = getPlayStoreHTML($package);
 
 $plus_one_count = getPlusOne($package);
 $review_count = getReviewCount($package, $html);
