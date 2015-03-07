@@ -48,11 +48,11 @@ function save_data_point_mongo($package, $reviews, $plus, $description) {
     $db = $m->underwater;
     $collection = $db->checkpoints;
 
-    $cursor = $collection->find()->sort(array('date' => -1) );
+    $cursor = $collection->find(array("description" => array('$ne' => null)))->sort(array('date' => -1) );
     $last_row = $cursor->getNext();
     $desc_md5_last = md5($last_row['description']);
     $desc_md5_curr = md5($description);
-    if($desc_md5_curr == $desc_md5_last) $description = "";
+    if($desc_md5_curr == $desc_md5_last) $description = null;
 
     $document = array( "package" => $package, "date" => $now, "reviews" => $reviews, "gplus" => $plus, "description" => $description );
     $collection->insert($document);
