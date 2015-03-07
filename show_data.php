@@ -11,7 +11,8 @@
 
 	// iterate through the results
 	foreach ($cursor as $document) {
-	    echo "Package: {$document["package"]}, Date: {$document["date"]}, Gplus: {$document["gplus"]}, Reviews: {$document["reviews"]}, D: {$document["description"]} </br>";
+		$date = $document["date"]->toDateTime()->format('Y-m-d H:i:s');
+	    echo "Package: {$document["package"]}, Date: {$date}, Gplus: {$document["gplus"]}, Reviews: {$document["reviews"]}, D: {$document["description"]} </br>";
 	}
 
 ?>
