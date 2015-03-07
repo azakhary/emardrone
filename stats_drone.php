@@ -14,10 +14,15 @@ function getPlusOne($package) {
     return $count;
 }
 
-function getReviewCount($package) {
+function getPlayStoreHTML($package) {
     $url = "https://play.google.com/store/apps/details?id=$package&hl=en";
 
     $html =  file_get_contents($url);
+
+    return $html;
+}
+
+function getReviewCount($package, $html) {
 
     $count = cUrl::getBetweenString($html, 'stars-count"> (<span class="reviewers-small"></span>', ')');
 
@@ -26,14 +31,20 @@ function getReviewCount($package) {
     return $count;    
 }
 
-function save_data_point_mongo($package, $reviews, $plus) {
+function getDescription($package, $html) {
+    $description = cUrl::getBetweenString($html, '<div class="id-app-orig-desc">', '</');
+    $description = str_replace("<br>", "\n", $description)
+    return $description; 
+}
+
+function save_data_point_mongo($package, $reviews, $plus, $description) {
     $host = "mongodb://admin:1ePwQJx4KNaR@127.6.119.3:27017/";
 
     $m = new MongoClient($host);
     $db = $m->underwater;
     $collection = $db->checkpoints;
 
-    $document = array( "package" => $package, "date" => date("Y-m-d H:i:s"), "reviews" => $reviews, "gplus" => $plus );
+    $document = array( "package" => $package, "date" => date("Y-m-d H:i:s"), "reviews" => $reviews, "gplus" => $plus, "description" => $description );
     $collection->insert($document);
 }
 
@@ -46,7 +57,7 @@ function read_targets() {
     $query = "SELECT * FROM `targets`";
     $result = mysqli_query($link, $query);
 
-    while($row = $result->fetch_assoc()) {
+    while($row = $result->fetch_array()) {
         $targets[] = $row['package'];
     }
 
@@ -57,10 +68,13 @@ $targets = read_targets();
 
 $package = $targets[0];
 
-$plus_one_count = getPlusOne($package);
-$review_count = getReviewCount($package);
+$html = getPlayStoreHTML($packge);
 
-save_data_point_mongo($package, $review_count, $plus_one_count);
+$plus_one_count = getPlusOne($package);
+$review_count = getReviewCount($package, $html);
+$description = getDescription($package, $html);
+
+save_data_point_mongo($package, $review_count, $plus_one_count, $description);
 
 echo "done";
 ?>
