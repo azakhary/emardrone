@@ -33,7 +33,7 @@ function getReviewCount($package, $html) {
 
 function getDescription($package, $html) {
     $description = cUrl::getBetweenString($html, '<div class="id-app-orig-desc">', '</');
-    $description = str_replace("<br>", "\n", $description)
+    $description = str_replace("<br>", "\n", $description);
     return $description; 
 }
 
