@@ -48,6 +48,10 @@ function save_data_point_mongo($package, $reviews, $plus, $description) {
     $db = $m->underwater;
     $collection = $db->checkpoints;
 
+    $cursor = $collection->find()->sort(array('date' => -1) );
+    $last_row = $cursor[0];
+    var_dump($last_row);
+
     $document = array( "package" => $package, "date" => $now, "reviews" => $reviews, "gplus" => $plus, "description" => $description );
     $collection->insert($document);
 }
