@@ -46,10 +46,11 @@ function read_targets() {
     // Performing SQL query
     $query = "SELECT * FROM `targets`";
     $result = mysql_query($query);
+    var_dump(mysql_error());
 
-    while($row = $result->fetch_assoc()) {var_dump("yo");
-            $targets[] = $row['package'];
-        }
+    while($row = $result->fetch_assoc()) {
+        $targets[] = $row['package'];
+    }
 
     return $targets;
 }
