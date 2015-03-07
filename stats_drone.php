@@ -47,13 +47,10 @@ function read_targets() {
     $query = "SELECT * FROM `targets`";
     $result = mysql_query($query);
 
-    if ($result->num_rows > 0) {
-    
-        while($row = $result->fetch_assoc()) {
+    while($row = $result->fetch_assoc()) {var_dump("yo");
             $targets[] = $row['package'];
         }
-    }
-var_dump($targets);
+
     return $targets;
 }
 
