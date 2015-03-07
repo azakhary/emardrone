@@ -31,7 +31,7 @@ function save_data_point_sql($reviews, $plus) {
     mysql_select_db('underwater');
 
     // Performing SQL query
-    $query = "INSERT INTO checkpoints (`date`, `reviews`, `checkpoints`) VALUES(NOW(), '$reviews' , '$plus')";
+    $query = "INSERT INTO checkpoints (`date`, `reviews`, `gplus`) VALUES(NOW(), '$reviews' , '$plus')";
     $result = mysql_query($query);
 }
 
