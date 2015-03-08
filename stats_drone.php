@@ -10,9 +10,7 @@ function getPlusOne($package) {
     $html =  file_get_contents($main_url);
 
     $count = cUrl::getBetweenString($html, '<td class="gP"><span class="A8 eja">+', ' ');
-    var_dump($count . "   " . $package);
-    var_dump($main_url);
-    var_dump($html);
+
     return $count;
 }
 
@@ -87,7 +85,7 @@ foreach($targets as $target) {
     $review_count = getReviewCount($package, $html);
     $description = getDescription($package, $html);
 
-    //save_data_point_mongo($package, $review_count, $plus_one_count, $description);
+    save_data_point_mongo($package, $review_count, $plus_one_count, $description);
 }
 
 echo "done";
