@@ -48,7 +48,7 @@ function save_data_point_mongo($package, $reviews, $plus, $description) {
     $db = $m->underwater;
     $collection = $db->checkpoints;
 
-    $cursor = $collection->find(array("description" => array('$ne' => null)))->sort(array('date' => -1) );
+    $cursor = $collection->find(array("package" => $package, "description" => array('$ne' => null)))->sort(array('date' => -1) );
     $last_row = $cursor->getNext();
     $desc_md5_last = md5($last_row['description']);
     $desc_md5_curr = md5($description);
@@ -76,15 +76,17 @@ function read_targets() {
 
 $targets = read_targets();
 
-$package = $targets[0];
+foreach($targets as $target) {
+    $package = $target;
 
-$html = getPlayStoreHTML($package);
+    $html = getPlayStoreHTML($package);
 
-$plus_one_count = getPlusOne($package);
-$review_count = getReviewCount($package, $html);
-$description = getDescription($package, $html);
+    $plus_one_count = getPlusOne($package);
+    $review_count = getReviewCount($package, $html);
+    $description = getDescription($package, $html);
 
-save_data_point_mongo($package, $review_count, $plus_one_count, $description);
+    save_data_point_mongo($package, $review_count, $plus_one_count, $description);
+}
 
 echo "done";
 ?>
