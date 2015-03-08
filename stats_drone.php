@@ -11,6 +11,8 @@ function getPlusOne($package) {
 
     $count = cUrl::getBetweenString($html, '<td class="gP"><span class="A8 eja">+', ' ');
     var_dump($count . "   " . $package);
+    var_dump($main_url);
+    var_dump($html);
     return $count;
 }
 
